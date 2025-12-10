@@ -1,0 +1,80 @@
+.book-card {
+  display: flex;
+  width: 280px;
+  background: #181818;
+  color: #f3f3f3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.book-spine {
+  width: 18px;
+  background: linear-gradient(180deg, #bcc6cc, #4b6e6b);
+}
+
+.book-content {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.book-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.book-author {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.book-meta {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.book-series {
+  font-size: 0.8rem;
+  color: #6f9592;
+}
+
+.book-flags {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.flag {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.flag.read {
+  background: #2d6a4f;
+}
+
+.flag.reread {
+  background: #774936;
+}
+
+.flag.shelf {
+  background: #3a0ca3;
+}
