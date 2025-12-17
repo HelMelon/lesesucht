@@ -1,4 +1,4 @@
-.series-page {
+.shelves-page {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
   max-width: 100%;
 }
 
-.series-card {
+.shelf-card {
   background: #181818;
   border-radius: 16px;
   padding: 18px 20px;
@@ -15,18 +15,18 @@
   width: 40%;
 }
 
-.series-header {
+.shelf-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.series-header h2 {
+.shelf-header h2 {
   font-size: 1.1rem;
   font-weight: 600;
 }
 
-.series-percent {
+.shelf-percent {
   font-size: 0.9rem;
   opacity: 0.7;
 }
@@ -46,12 +46,12 @@
   transition: width 0.4s ease;
 }
 
-.series-stats {
+.shelf-stats {
   font-size: 0.85rem;
   opacity: 0.6;
 }
 
-.series-book-list {
+.shelf-book-list {
   list-style: none;
   padding: 0;
   margin: 12px 0 0 0;
@@ -60,9 +60,9 @@
   gap: 8px;
 }
 
-.series-book {
+.shelves-book {
   display: grid;
-  grid-template-columns: 32px 1fr auto;
+  grid-template-columns: 150px 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
@@ -71,15 +71,9 @@
   font-size: 0.9rem;
 }
 
-.series-book.read {
+.shelves-book.read {
   opacity: 0.6;
   text-decoration: line-through;
-}
-
-.book-order {
-  font-size: 0.8rem;
-  text-align: center;
-  opacity: 0.5;
 }
 
 .book-name {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
-import "./SeriesTracker.css";
+import "./ShelvesTracker.css";
 
-export function SeriesTracker() {
-  const [series, setSeries] = useState([]);
+export function ShelvesTracker() {
+  const [shelves, setShelves] = useState([]);
 
   useEffect(() => {
     fetch("/my-books.csv")
@@ -18,9 +18,9 @@ export function SeriesTracker() {
             const grouped = {};
 
             books.forEach((book) => {
-              if (!book.series) return;
+              if (!book.shelf) return;
 
-              const name = book.series.trim();
+              const name = book.shelf.trim();
 
               if (!grouped[name]) {
                 grouped[name] = {
@@ -38,56 +38,44 @@ export function SeriesTracker() {
               }
               grouped[name].author = book.author;
               grouped[name].books.push(book);
-              console.log(grouped);
             });
-
-            // сортировка книг внутри серии по порядку
-            Object.values(grouped).forEach((s) => {
-              s.books.sort((a, b) => {
-                const aa = Number(a.seriesOrder) || 0;
-                const bb = Number(b.seriesOrder) || 0;
-                return aa - bb;
-              });
-            });
-
-            setSeries(Object.values(grouped));
+            setShelves(Object.values(grouped));
           },
         });
       });
   }, []);
 
   return (
-    <div className="series-page">
-      {series.map((s) => {
+    <div className="shelves-page">
+      {shelves.map((s) => {
         const percent =
           s.total === 0 ? 0 : Math.round((s.read / s.total) * 100);
 
         return (
-          <div key={s.name} className="series-card">
-            <div className="series-header">
+          <div key={s.name} className="shelf-card">
+            <div className="shelf-header">
               <h2>{s.name}</h2>
-              <p>{s.author}</p>
-              <span className="series-percent">{percent}%</span>
+              <span className="shelf-percent">{percent}%</span>
             </div>
 
             <div className="progress-bar">
               <div className="progress-fill" style={{ width: `${percent}%` }} />
             </div>
 
-            <div className="series-stats">
+            <div className="shelf-stats">
               {s.read} из {s.total} книг
             </div>
 
-            {/* СПИСОК КНИГ */}
-            <ul className="series-book-list">
+            {/* СПИСОК ПОЛОК */}
+            <ul className="shelf-book-list">
               {s.books.map((book, index) => (
                 <li
                   key={index}
-                  className={`series-book ${
+                  className={`shelves-book ${
                     book.isRead === "TRUE" ? "read" : ""
                   }`}
                 >
-                  <span className="book-order">{book.seriesOrder || "–"}</span>
+                  <span className="book-author">{book.author}</span>
 
                   <span className="book-name">{book.name}</span>
 

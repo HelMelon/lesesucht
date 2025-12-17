@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
-import "./SeriesTracker.css";
+import "./AuthorsTracker.css";
 
-export function SeriesTracker() {
-  const [series, setSeries] = useState([]);
+export function AuthorsTracker() {
+  const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     fetch("/my-books.csv")
@@ -14,81 +14,67 @@ export function SeriesTracker() {
           skipEmptyLines: true,
           complete: (results) => {
             const books = results.data;
-
             const grouped = {};
 
             books.forEach((book) => {
-              if (!book.series) return;
+              if (!book.author) return;
 
-              const name = book.series.trim();
+              const author = book.author.trim();
 
-              if (!grouped[name]) {
-                grouped[name] = {
-                  name,
-                  author: "",
+              if (!grouped[author]) {
+                grouped[author] = {
+                  author: author,
                   total: 0,
                   read: 0,
                   books: [],
                 };
               }
 
-              grouped[name].total += 1;
+              grouped[author].total += 1;
+
               if (book.isRead === "TRUE") {
-                grouped[name].read += 1;
+                grouped[author].read += 1;
               }
-              grouped[name].author = book.author;
-              grouped[name].books.push(book);
-              console.log(grouped);
+
+              grouped[author].books.push(book);
             });
 
-            // сортировка книг внутри серии по порядку
-            Object.values(grouped).forEach((s) => {
-              s.books.sort((a, b) => {
-                const aa = Number(a.seriesOrder) || 0;
-                const bb = Number(b.seriesOrder) || 0;
-                return aa - bb;
-              });
-            });
-
-            setSeries(Object.values(grouped));
+            setAuthors(Object.values(grouped));
           },
         });
       });
   }, []);
 
   return (
-    <div className="series-page">
-      {series.map((s) => {
+    <div className="authors-page">
+      {authors.map((s) => {
         const percent =
           s.total === 0 ? 0 : Math.round((s.read / s.total) * 100);
 
         return (
-          <div key={s.name} className="series-card">
-            <div className="series-header">
-              <h2>{s.name}</h2>
-              <p>{s.author}</p>
-              <span className="series-percent">{percent}%</span>
+          <div key={s.author} className="author-card">
+            <div className="author-header">
+              <h2>{s.author}</h2>
+              <span className="author-percent">{percent}%</span>
             </div>
 
             <div className="progress-bar">
               <div className="progress-fill" style={{ width: `${percent}%` }} />
             </div>
 
-            <div className="series-stats">
+            <div className="author-stats">
               {s.read} из {s.total} книг
             </div>
 
             {/* СПИСОК КНИГ */}
-            <ul className="series-book-list">
+            <ul className="author-book-list">
               {s.books.map((book, index) => (
                 <li
                   key={index}
-                  className={`series-book ${
+                  className={`author-book ${
                     book.isRead === "TRUE" ? "read" : ""
                   }`}
                 >
-                  <span className="book-order">{book.seriesOrder || "–"}</span>
-
                   <span className="book-name">{book.name}</span>
 
                   {book.isRead === "TRUE" && (
