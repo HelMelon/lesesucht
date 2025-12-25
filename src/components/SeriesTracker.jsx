@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Papa from "papaparse";
 import "./SeriesTracker.css";
 
 export function SeriesTracker() {
   const [series, setSeries] = useState([]);
+  const { user } = useParams();
 
   useEffect(() => {
-    fetch("/my-books.csv")
+    fetch(`/books-list-${user}.csv`)
       .then((res) => res.text())
       .then((csvText) => {
         Papa.parse(csvText, {
@@ -38,7 +40,6 @@ export function SeriesTracker() {
               }
               grouped[name].author = book.author;
               grouped[name].books.push(book);
-              console.log(grouped);
             });
 
             // сортировка книг внутри серии по порядку

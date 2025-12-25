@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Papa from "papaparse";
 import "./AuthorsTracker.css";
 
 export function AuthorsTracker() {
   const [authors, setAuthors] = useState([]);
+  const { user } = useParams();
 
   useEffect(() => {
-    fetch("/my-books.csv")
+    fetch(`/books-list-${user}.csv`)
       .then((res) => res.text())
       .then((csvText) => {
         Papa.parse(csvText, {

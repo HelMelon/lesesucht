@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Papa from "papaparse";
 import "./ShelvesTracker.css";
 
 export function ShelvesTracker() {
   const [shelves, setShelves] = useState([]);
+  const { user } = useParams();
 
   useEffect(() => {
-    fetch("/my-books.csv")
+    fetch(`/books-list-${user}.csv`)
       .then((res) => res.text())
       .then((csvText) => {
         Papa.parse(csvText, {
